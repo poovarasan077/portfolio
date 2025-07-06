@@ -701,7 +701,7 @@ header > a:hover {
         margin-bottom: 20px; /* Space below button */
     }
     .contact-left {
-        order: 1; /* Social icons (in contact-left) appear after the form */
+        order: 2; /* Social icons (in contact-left) appear after the form */
     }
     .contact-right {
         order: 1; /* Form (contact-right) appears first in the contact section */
