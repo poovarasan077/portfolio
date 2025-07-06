@@ -208,7 +208,7 @@ header > a:hover {
     justify-content: center;
 }
 
-.mainabout > .contentabout > img {
+.mainabout > .contentabout > video {
     width: 300px;
     height: 300px;
     object-fit: cover;
@@ -218,7 +218,7 @@ header > a:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.mainabout > .contentabout > img:hover {
+.mainabout > .contentabout > video:hover {
     transform: scale(1.03);
     box-shadow: 0 0 30px var(--shadow-dark);
 }
@@ -370,8 +370,6 @@ header > a:hover {
 /* --- Project Section Styling --- */
 .project {
     background-color: var(--primary-bg-color);
-    width: 100%;
-    min-height: 100vh;
     padding: 80px 20px;
     display: flex;
     flex-direction: column;
@@ -390,19 +388,18 @@ header > a:hover {
 .projectheader > img {
     height: 80px;
     margin-right: 20px;
-    filter: drop-shadow(2px 2px 5px var(--accent-primary)); /* Shadow based on new accent */
+    filter: drop-shadow(2px 2px 5px var(--accent-primary));
 }
 
 .projectheader > h1 {
-    color: var(--accent-primary); /* Changed header color to primary accent */
+    color: var(--accent-primary);
     font-size: clamp(2.5rem, 5vw, 3.5rem);
-    text-shadow: 2px 2px 5px var(--accent-primary); /* Shadow based on new accent */
+    text-shadow: 2px 2px 5px var(--accent-primary);
 }
 
 .topproject {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     width: 90%;
     max-width: 1400px;
@@ -410,8 +407,7 @@ header > a:hover {
 }
 
 .projectbox {
-    background-color: var(--secondary-bg-color); /* Changed to secondary bg for project boxes */
-    width: 48%;
+    background-color: var(--secondary-bg-color);
     min-height: 250px;
     padding: 30px;
     border-radius: 15px;
@@ -421,19 +417,19 @@ header > a:hover {
     flex-direction: column;
     justify-content: space-evenly;
     text-align: left;
-    color: var(--text-color-light); /* Ensure text is light on dark box */
-    border: 1px solid var(--border-color); /* Added subtle border */
+    color: var(--text-color-light);
+    border: 1px solid var(--border-color);
 }
 
 .projectbox:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 30px var(--shadow-dark);
-    border-color: var(--accent-secondary); /* Border highlights on hover */
+    border-color: var(--accent-secondary);
 }
 
 .projectbox > h2 {
     margin-bottom: 15px;
-    color: var(--accent-primary); /* Changed heading color to primary accent */
+    color: var(--accent-primary);
     font-size: clamp(1.8rem, 3vw, 2.2rem);
 }
 
@@ -443,11 +439,12 @@ header > a:hover {
     line-height: 1.6;
 }
 
+
 /* --- Contact Section Styling --- */
 .contact {
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 150px;
     padding: 80px 20px;
     background-color: var(--primary-bg-color);
     color: var(--text-color-light);
@@ -622,9 +619,14 @@ header > a:hover {
         text-align: center;
         gap: 30px;
     }
-    .mainabout .contentabout img {
+    .mainabout .contentabout video {
         margin-bottom: 20px;
+        
     }
+    .mainabout .contentabout video:hover{
+        transform: scale(1.1);
+    }
+
     .mainabout .contentabout .textabout {
         text-align: center;
     }
@@ -677,12 +679,12 @@ header > a:hover {
         padding: 5px 8px;
     }
 
-    .mainabout .contentabout img {
+    .mainabout .contentabout video {
         width: 250px;
         height: 250px;
     }
 
-    .projectheader > img {
+    .projectheader > video {
         height: 60px;
     }
     .projectheader > h1 {
@@ -695,11 +697,11 @@ header > a:hover {
         flex-direction: column;
     }
     .contact-right form button {
-        order: 1; /* Button appears first in the form */
+        order: 2; /* Button appears first in the form */
         margin-bottom: 20px; /* Space below button */
     }
     .contact-left {
-        order: 2; /* Social icons (in contact-left) appear after the form */
+        order: 1; /* Social icons (in contact-left) appear after the form */
     }
     .contact-right {
         order: 1; /* Form (contact-right) appears first in the contact section */
@@ -723,14 +725,13 @@ header > a:hover {
     }
 
     .wrapper > header {
-        flex-direction: column;
+        flex-direction:row-reverse;
         height: auto;
         padding: 10px;
-        gap: 5px;
     }
     header > a {
         font-size: 0.85rem;
-        width: 100%;
+        width: 20%;
         text-align: center;
         padding: 8px 0;
     }
@@ -777,5 +778,9 @@ header > a:hover {
     .contact-right button {
         padding: 12px 20px;
         font-size: 1rem;
+    }
+    .contact-left>video{
+        height: 300px;
+        border: 5px  limegreen solid;
     }
 }
