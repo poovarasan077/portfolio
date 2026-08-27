@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "src": "/zohverify/verifyforzoho.html",
+      "dest": "/zohverify/verifyforzoho.html"
+    }
+  ]
+}
