@@ -3,6 +3,10 @@
     {
       "src": "/zohverify/verifyforzoho.html",
       "dest": "/zohverify/verifyforzoho.html"
+    },
+    {
+      "src": "/zohoverify/verifyforzoho.html",
+      "dest": "/zohoverify/verifyforzoho.html"
     }
   ]
 }
