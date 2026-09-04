@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 resolves `dark:` against `prefers-color-scheme` by default.
+ * next-themes toggles a `.dark` class, so the variant is redefined here —
+ * without this, the theme switch would have no effect on utilities.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   Design tokens
+   Carried forward from the previous portfolio: ink-navy surface, amber signal,
+   teal secondary. Light mode is a warm-paper counterpart, not an inversion.
+
+   Accent tokens come in three strengths because raw amber (#F0A93A) sits at
+   ~1.9:1 on white and fails AA:
+     --accent        decorative fills, borders, dots
+     --accent-strong text-safe on the current background (>= 4.5:1)
+     --accent-soft   translucent tint for chip/badge backgrounds
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f3f1ec;
+  --border: #ddd8cd;
+  --border-soft: #e9e5dc;
+
+  --text: #14181f;
+  --text-muted: #55606f;
+  --text-faint: #656f7e;
+
+  --accent: #b87a0c;
+  --accent-strong: #8a5b06;
+  --accent-soft: rgb(184 122 12 / 0.12);
+
+  --accent-2: #0e7c74;
+  --accent-2-strong: #0b6159;
+  --accent-2-soft: rgb(14 124 116 / 0.12);
+
+  --success: #157f45;
+
+  --grid-line: rgb(20 24 31 / 0.045);
+  --shadow-card: 0 1px 2px rgb(20 24 31 / 0.04), 0 8px 24px -16px rgb(20 24 31 / 0.12);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0a0e1a;
+  --surface: #10162a;
+  --surface-2: #171f38;
+  --border: #26315a;
+  --border-soft: #1b2340;
+
+  --text: #e8ebf3;
+  --text-muted: #8d96b3;
+  --text-faint: #737da0;
+
+  --accent: #f0a93a;
+  --accent-strong: #f0a93a;
+  --accent-soft: rgb(240 169 58 / 0.14);
+
+  --accent-2: #46d1c6;
+  --accent-2-strong: #46d1c6;
+  --accent-2-soft: rgb(70 209 198 / 0.14);
+
+  --success: #3fd17e;
+
+  --grid-line: rgb(232 235 243 / 0.025);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 24px 48px -32px rgb(0 0 0 / 0.7);
+}
+
+/* Expose the tokens as Tailwind utilities (bg-surface, text-muted, …). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border-hairline: var(--border);
+  --color-border-soft: var(--border-soft);
+
+  --color-fg: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-strong: var(--accent-2-strong);
+  --color-accent-2-soft: var(--accent-2-soft);
+
+  --color-success: var(--success);
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keep anchored sections clear of the sticky header. */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  /* One consistent, always-visible focus treatment across the whole site. */
+  :focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/*
+ * Graph-paper grid, carried over from the previous site — it reads as a nod to
+ * the BI/dashboard work rather than decoration. Masked so it fades out well
+ * before it can interfere with text.
+ */
+@utility grid-backdrop {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, black 35%, transparent 88%);
+}
+
+/* ==========================================================================
+   Motion
+   Framer Motion is gated in JS via useReducedMotion(); these guards cover the
+   CSS-only animations.
+   ========================================================================== */
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 18%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 8%, transparent);
+  }
+}
+
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.status-dot {
+  animation: pulse-ring 2.4s ease-in-out infinite;
+}
+
+.spark-line {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: draw-line 1.8s ease forwards 0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .status-dot,
+  .spark-line {
+    animation: none;
+  }
+
+  .spark-line {
+    stroke-dashoffset: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
